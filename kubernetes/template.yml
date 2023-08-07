@@ -1,0 +1,228 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-and-booking
+  labels:
+    app: recommendation-and-booking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation-and-booking
+  template:
+    metadata:
+      labels:
+        app: recommendation-and-booking
+    spec:
+      containers:
+        - name: recommendation-and-booking
+          image: username/recommendation-and-booking:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-support
+  labels:
+    app: customer-support
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-support
+  template:
+    metadata:
+      labels:
+        app: customer-support
+    spec:
+      containers:
+        - name: customer-support
+          image: username/customer-support:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: partnership-management
+  labels:
+    app: partnership-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: partnership-management
+  template:
+    metadata:
+      labels:
+        app: partnership-management
+    spec:
+      containers:
+        - name: partnership-management
+          image: username/partnership-management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collaboration-management
+  labels:
+    app: collaboration-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collaboration-management
+  template:
+    metadata:
+      labels:
+        app: collaboration-management
+    spec:
+      containers:
+        - name: collaboration-management
+          image: username/collaboration-management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendation-and-booking
+  labels:
+    app: recommendation-and-booking
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: recommendation-and-booking
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-support
+  labels:
+    app: customer-support
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: customer-support
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: partnership-management
+  labels:
+    app: partnership-management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: partnership-management
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: collaboration-management
+  labels:
+    app: collaboration-management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: collaboration-management
+

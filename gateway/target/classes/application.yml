@@ -1,0 +1,82 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: recommendation-and-booking
+          uri: http://localhost:8082
+          predicates:
+            - Path=/travels/**, 
+        - id: customer-support
+          uri: http://localhost:8083
+          predicates:
+            - Path=/supports/**, 
+        - id: partnership-management
+          uri: http://localhost:8084
+          predicates:
+            - Path=/partnerships/**, 
+        - id: collaboration-management
+          uri: http://localhost:8085
+          predicates:
+            - Path=/collaborations/**, 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: recommendation-and-booking
+          uri: http://recommendationAndBooking:8080
+          predicates:
+            - Path=/travels/**, 
+        - id: customer-support
+          uri: http://customerSupport:8080
+          predicates:
+            - Path=/supports/**, 
+        - id: partnership-management
+          uri: http://partnershipManagement:8080
+          predicates:
+            - Path=/partnerships/**, 
+        - id: collaboration-management
+          uri: http://collaborationManagement:8080
+          predicates:
+            - Path=/collaborations/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
